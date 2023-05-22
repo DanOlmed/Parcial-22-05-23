@@ -36,6 +36,9 @@ const deleteReservaById=(req,res)=> {
         )
     }
 }
+const createReserva=(req,res)=>{
+
+}
 
 
 
@@ -45,5 +48,6 @@ const deleteReservaById=(req,res)=> {
 module.exports= {
     getAllReservas,
     getReservasByid,
-    deleteReservaById
+    deleteReservaById,
+    createReserva
 }
