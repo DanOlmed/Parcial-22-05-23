@@ -1,4 +1,5 @@
 const reservas = require('../../data/reservas.json');
+const vehiculos = require('../../data/vehiculos.json')
 
 const getAllReservas= (req,res)=>{
     res.status(200).json(reservas);
@@ -59,7 +60,11 @@ const createReserva=(req,res)=>{
         if(longitudFecha!==8){
             res.status(400).json(`La fecha ingresada debe tener 8 caracteres`)
         }
-        reservas.push({id: maxId, cliente, cantPersonas,distancia,fecha})
+        
+        const vehiculo = vehiculos.find(ve => ve.autonomiaKms<=reservaData.distancia&&ve.capacidad<=reservaData.cantPersonas)
+
+        reservas.push({id: maxId, cliente:reservaData.cliente, cantPersonas:reservaData.cantPersonas,distancia:reservaData.distancia,fecha:reservaData.fecha, vehiculo: vehiculo})
+        res.status(201).json({mensaje: "reserva creada exitosamente"})
 
     }
 
