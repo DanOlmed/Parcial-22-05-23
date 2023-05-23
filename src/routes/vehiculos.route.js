@@ -2,9 +2,10 @@ const express= require('express');
 const vehiculosController= require('../controllers/vehiculos.controller');
 const router = express.Router();
 
-router.get('/api/vehiculos', vehiculosController.getAllVehiculos);
-router.get('/api/vehiculos/:patente',vehiculosController.getVehiculoByPatente);
-router.put('/api/vehiculos/:patente', vehiculosController.updateVehiculo);
+router.get('/', vehiculosController.getAllVehiculos);
+router.get('/:patente',vehiculosController.getVehiculoByPatente);
+router.put('/:patente', vehiculosController.updateVehiculo);
+router.post('/',vehiculosController.createVehiculo)
 
 
 

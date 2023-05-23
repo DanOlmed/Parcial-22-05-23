@@ -16,16 +16,9 @@ const getReservasByid= (req,res)=>{
 
 const deleteReservaById=(req,res)=> {
     const id = req.params.id
-    const indice = reservas.findIndex( reserva => reservas.id == id )
-    if(indice==-1) {
-        res.status(404).
-        json(
-            {
-            resultado: "La operación de borrado no pudo ser realizada",
-            mensaje: `La reserva con id ${id} no fue encontrado`
-            }
-        )
-    } else {
+    const indice = reservas.findIndex( reserva => reserva.id == id )
+    
+    if(indice >-1) {
         const reserva = reservas[indice];
         const resultado = reservas.splice(indice,1)
         res.status(200)
@@ -34,9 +27,41 @@ const deleteReservaById=(req,res)=> {
                   reserva : reserva
             }
         )
+        res.status(404).
+        json(
+            {
+            resultado: "La operación de borrado no pudo ser realizada",
+            mensaje: `La reserva con id ${id} no fue encontrado`
+            }
+        )
+    } else {
+        res.status(404).
+        json(
+            {
+            resultado: "La operación de borrado no pudo ser realizada",
+            mensaje: `La reserva con id ${id} no fue encontrado`
+            }
+        )
     }
 }
 const createReserva=(req,res)=>{
+    const reservaData = req.body
+    const ids = reservas.map( e => e.id)
+    const maxId = reservas.length > 0 ? Math.max(...ids) + 1 : 1
+    const longitudFecha = reservaData.fecha.length
+    if(reservaData.cantPersonas>10 || reservaData.cantPersonas<1){
+        res.status(400).json(`la cantidad de personas no esta dentro de los parametros aceptados, se permiten de 1 a 10 pasajeros maximo`)
+    } else{
+        if(reservaData.distancia >500 || reservaData.distancia<=0){
+            res.status(400).json(`La distancia ${reservaData.distancia} no esta dentro de los parametros aceptados, se permiten de 1 a 500 kms inclusive`)
+            
+        }
+        if(longitudFecha!==8){
+            res.status(400).json(`La fecha ingresada debe tener 8 caracteres`)
+        }
+        reservas.push({id: maxId, cliente, cantPersonas,distancia,fecha})
+
+    }
 
 }
 

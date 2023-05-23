@@ -2,9 +2,10 @@ const express= require('express');
 const reservaController= require('../controllers/reserva.controller');
 const router = express.Router();
 
-router.get('/api/reservas', reservaController.getAllReservas);
-router.get('/api/reservas/:id',reservaController.getReservasByid);
-router.delete('/api/reservas/:id', reservaController.deleteReservaById);
+router.get('/', reservaController.getAllReservas);
+router.get('/:id',reservaController.getReservasByid);
+router.delete('/:id', reservaController.deleteReservaById);
+router.post('/',reservaController.createReserva)
 
 
 

@@ -39,6 +39,27 @@ const updateVehiculo = (req,res) => {
 }
 
 const createVehiculo = (req,res) =>{
+    const vehiculosData = req.body
+    const existe = vehiculos.find(vehiculo => vehiculo.patente == vehiculosData.patente)
+   
+    if (!existe) {
+        const longitudPatente = vehiculosData.patente.length
+        if(longitudPatente===7){   
+        
+        if( ! vehiculosData.habilitado)
+            vehiculosData.habilitado = false
+    
+        if (vehiculosData.capacidad<=1 || vehiculosData.capacidad>=10 || vehiculosData.autonomiaKms<=0) {
+            res.status(400).json({mensaje: `No se puede registrar el vehiculo con patente ${vehiculosData.patente} por no cumplir con las especificaciones: capacidad entre 1 y 10 pasajeros y autonomia en kms mayor a 0`})    
+        } else  {
+            vehiculos.push(vehiculosData)
+            res.status(201).json({mensaje: `El vehiculo con patente ${vehiculosData.patente} fue creado correctamente`})
+        }}else{
+            res.status(400).json({mensaje: "la pantente debe tener una longitud de 7 caracteres"})
+        }
+    } else {
+        res.status(400).json({mensaje: `El vehiculo con pantente ${vehiculosData.patente} ya existe en la base de datos`})
+    }
 
 }
 
